@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Wedding of Nuraisyah & Rohil</title>
+    <!-- Font Elegan -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Great+Vibes&family=Lora:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Lightbox Modal untuk Zoom Foto -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <span class="close-lightbox">&times;</span>
+        <img id="lightbox-img" src="" alt="Zoomed Foto">
+    </div>
+
+    <!-- 1. COVER UNDANGAN -->
+    <div id="cover" class="parallax-bg animate-zoom" style="background-image: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1950&q=80');">
+        <div class="cover-arch">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Floral_design_-_ornament.svg/512px-Floral_design_-_ornament.svg.png" class="floral-ornament cover-floral-top animate-fade-in" alt="flower">
+            
+            <h1 class="monogram animate-slide-up">NR</h1>
+            <p class="subtitle-cover animate-slide-up">THE WEDDING OF</p>
+            <h2 class="title-couple animate-zoom">Nuraisyah & Rohil</h2>
+            <p class="date-cover animate-slide-up">14 . 06 . 2026</p>
+            
+            <div class="guest-info animate-slide-up">
+                <p>Kepada Yth.</p>
+                <h3 class="guest-name">Tamu Undangan</h3>
+            </div>
+
+            <button id="btn-open" class="animate-slide-up">Buka Undangan</button>
+            
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Floral_design_-_ornament.svg/512px-Floral_design_-_ornament.svg.png" class="floral-ornament cover-floral-bottom animate-fade-in" alt="flower">
+        </div>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+    <button id="music-control" class="playing">🎵</button>
+
+    <!-- 2. WITH LOVE SECTION -->
+    <section id="with-love" class="parallax-bg bg-dark-red" style="background-image: url('https://www.transparenttextures.com/patterns/floral-motif.png');">
+        <div class="photo-wrapper animate-zoom">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Floral_design_-_ornament.svg/512px-Floral_design_-_ornament.svg.png" class="floral-ornament floral-top-right animate-fade-in" alt="flower">
+            <img src="love.jpeg" alt="With Love Photo" class="with-love-img zoomable" onclick="openLightbox(this.src)">
+        </div>
+        
+        <div class="text-container animate-slide-up">
+            <h2 class="section-title" style="color: #fdfbf7;">WITH LOVE</h2>
+            <p class="ayat" style="color: #fdfbf7;">
+                "Dan diantara tanda-tanda kekuasaanNya ialah Dia menciptakan untukmu pasangan-pasangan dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikanNya diantaramu rasa kasih dan sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berpikir."<br><br>
+                (Qs. Ar. Rum : 21)
+            </p>
+        </div>
+    </section>
+
+    <!-- 3. BRIDE & GROOM SECTION -->
+    <section id="bride-groom" class="parallax-bg" style="background-image: url('001.png');">
+        <div class="content-box animate-zoom">
+            <h2 class="section-title animate-slide-up">BRIDE & GROOM</h2>
+            <p class="salam animate-slide-up">Assalamualaikum Wr. Wb.<br>Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan putra-putri kami:</p>
+            
+            <div class="couple-cards">
+                <div class="person animate-fade-left">
+                    <div class="photo-half-pill">
+                        <img src="sendiri2.jpeg" alt="Nuraisyah">
+                    </div>
+                    <h3 class="name-script">Nuraisyah</h3>
+                    <p class="full-name">Nuraisyah</p>
+                    <p class="parents">Putri dari<br>Alm. Bpk Uyan Nuryana & Ibu Janah</p>
+                    <a href="https://instagram.com/_dnraisyah" target="_blank" class="ig-link">@_dnraisyah</a>
+                </div>
+                
+                <div class="dan animate-zoom">&</div>
+                
+                <div class="person animate-fade-right">
+                    <div class="photo-half-pill">
+                        <img src="sendiri1.jpeg" alt="Rohil">
+                    </div>
+                    <h3 class="name-script">Rohil</h3>
+                    <p class="full-name">Rohil Hayat</p>
+                    <p class="parents">Putra dari<br>Bpk Mustofa & Ibu Didah</p>
+                    <a href="https://instagram.com/Rohil_adistia" target="_blank" class="ig-link">@Rohil_adistia</a>
+                </div>
+            </div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Floral_design_-_ornament.svg/512px-Floral_design_-_ornament.svg.png" class="floral-ornament floral-bottom-left animate-fade-in" alt="flower">
+        </div>
+    </section>
+
+    <!-- 4. AKAD NIKAH & RESEPSI -->
+    <section id="events" class="parallax-bg bg-dark-red" style="background-image: url('002.png');">
+        
+        <h2 class="section-title animate-slide-up" style="color: #fdfbf7; margin-bottom: 40px;">SAVE THE DATE</h2>
+
+        <div class="event-detail-card animate-fade-left">
+            <h3 class="event-heading">AKAD NIKAH</h3>
+            <p class="event-day">MINGGU</p>
+            <h3 class="event-date-number count-up" data-target="14">0</h3>
+            <p class="event-month">JUNI 2026</p>
+            <p class="event-time">10:00 WIB</p>
+            
+            <div class="divider-icon animate-zoom">
+                <span class="line"></span><span class="icon">🏠</span><span class="line"></span>
+            </div>
+            
+            <p class="event-location">Kediaman Mempelai Wanita</p>
+            <p class="event-address">Kp. Jambudipa Rt 002 / Rw 009<br>Desa Bangbayang, Kec. Gekbrong<br>Kab. Cianjur</p>
+            <button onclick="window.open('https://maps.google.com/', '_blank')" class="btn-gold animate-slide-up">📍 LIHAT LOKASI</button>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Floral_design_-_ornament.svg/512px-Floral_design_-_ornament.svg.png" class="floral-ornament event-floral animate-fade-in" alt="flower">
+        </div>
+
+        <div class="event-detail-card animate-fade-right">
+            <h3 class="event-heading">RESEPSI</h3>
+            <p class="event-day">MINGGU</p>
+            <h3 class="event-date-number count-up" data-target="14">0</h3>
+            <p class="event-month">JUNI 2026</p>
+            <p class="event-time">11:00 WIB - Selesai</p>
+            
+            <div class="divider-icon animate-zoom">
+                <span class="line"></span><span class="icon">🏠</span><span class="line"></span>
+            </div>
+            
+            <p class="event-location">Kediaman Mempelai Wanita</p>
+            <p class="event-address">Kp. Jambudipa Rt 002 / Rw 009<br>Desa Bangbayang, Kec. Gekbrong<br>Kab. Cianjur</p>
+            <button onclick="window.open('https://maps.google.com/', '_blank')" class="btn-gold animate-slide-up">📍 LIHAT LOKASI</button>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Floral_design_-_ornament.svg/512px-Floral_design_-_ornament.svg.png" class="floral-ornament event-floral animate-fade-in" alt="flower">
+        </div>
+    </section>
+
+    <!-- 5. GALLERY SECTION -->
+    <section id="gallery" class="parallax-bg" style="background-image: url('003.png');">
+        <div class="content-box clean-box animate-zoom">
+            <h2 class="section-title animate-slide-up">OUR GALLERY</h2>
+            <div class="gallery-grid">
+                <img src="1.jpg.jpeg" alt="Gallery 1" class="zoomable animate-zoom" onclick="openLightbox(this.src)">
+                <img src="2.jpg.jpeg" alt="Gallery 2" class="zoomable animate-zoom" onclick="openLightbox(this.src)">
+                <img src="3.jpg.jpeg" alt="Gallery 3" class="zoomable animate-zoom" onclick="openLightbox(this.src)">
+                <img src="4.jpg" alt="Gallery 4" class="zoomable animate-zoom" onclick="openLightbox(this.src)">
+                <img src="5.jpg.jpeg" alt="Gallery 5" class="zoomable animate-zoom" onclick="openLightbox(this.src)">
+                <img src="6.jpg.jpeg" alt="Gallery 6" class="zoomable animate-zoom" onclick="openLightbox(this.src)">
+                <img src="7.jpg.jpeg" alt="Gallery 7" class="zoomable animate-zoom" onclick="openLightbox(this.src)">
+                <img src="8.jpg.jpeg" alt="Gallery 8" class="zoomable animate-zoom" onclick="openLightbox(this.src)">
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. WEDDING GIFT -->
+    <section id="gift" class="parallax-bg bg-dark-red" style="background-image: url('004.png');">
+        <div class="content-box clean-box animate-slide-up">
+            <h2 class="section-title animate-zoom">WEDDING GIFT</h2>
+            <p class="salam animate-slide-up">Kehadiran dan doa restu Anda adalah hadiah terindah bagi kami. Namun jika Anda bermaksud memberikan tanda kasih, dapat melalui fitur di bawah ini:</p>
+            
+            <div class="gift-box animate-fade-left">
+                <h3>Bank BNI</h3>
+                <p class="rek-number">2022977339</p>
+                <p>a.n Nuraisyah</p>
+                <button class="btn-copy" onclick="copyText('2022977339', this)">Salin Rekening</button>
+            </div>
+
+            <div class="gift-box animate-fade-right">
+                <h3>DANA</h3>
+                <p class="rek-number">087839137263</p>
+                <p>a.n Rohil Hayat</p>
+                <button class="btn-copy" onclick="copyText('087839137263', this)">Salin Nomor DANA</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. RSVP & WISHES -->
+    <section id="rsvp" class="parallax-bg" style="background-image: url('005.png');">
+        <div class="content-box clean-box animate-zoom">
+            <h2 class="section-title animate-slide-up">RSVP & WISHES</h2>
+            <p class="salam animate-slide-up">Konfirmasi kehadiran & berikan doa terbaik Anda</p>
+            
+            <form id="rsvpForm" class="animate-slide-up">
+                <input type="text" id="guestName" placeholder="Nama Lengkap Anda" required>
+                
+                <!-- CUSTOM DROPDOWN SELECT -->
+                <div class="custom-select" id="customSelect">
+                    <div class="select-selected">
+                        <span id="selected-text">Konfirmasi Kehadiran</span>
+                    </div>
+                    <div class="select-items select-hide">
+                        <div data-value="Hadir">Ya, Saya Akan Hadir</div>
+                        <div data-value="Berhalangan">Maaf, Berhalangan Hadir</div>
+                    </div>
+                    <!-- Input asli disembunyikan untuk logic JS/Firebase -->
+                    <input type="hidden" id="attendance" required>
+                </div>
+
+                <textarea id="guestWish" rows="4" placeholder="Tulis ucapan dan doa untuk kedua mempelai..." required></textarea>
+                <button type="submit" class="submit-btn animate-zoom">Kirim Konfirmasi</button>
+            </form>
+
+            <!-- CUSTOM TOAST NOTIFICATION (Elegan, muncul tanpa alert browser) -->
+            <div id="custom-toast" class="toast-hidden">
+                <div class="toast-content">
+                    <span class="toast-icon">✨</span>
+                    <p class="toast-message" id="toast-message">Terima kasih! Doa & konfirmasi Anda telah tersimpan.</p>
+                </div>
+            </div>
+
+            <!-- WISHES CONTAINER (Sembunyi secara default, muncul jika ada isinya) -->
+            <div id="wishes-container" class="wishes-wrapper animate-slide-up" style="display: none;">
+                <h3 class="wishes-title">Doa & Ucapan</h3>
+                <div id="wishes-list">
+                    <!-- Ucapan Tamu Akan Dirender Di Sini -->
+                </div>
+                <button id="btn-load-more" class="animate-zoom" style="display: none;">Lihat lebih banyak</button>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="animate-slide-up">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Floral_design_-_ornament.svg/512px-Floral_design_-_ornament.svg.png" class="floral-ornament footer-floral animate-fade-in" alt="flower">
+        <h2 class="title-couple animate-zoom" style="font-size: 2.5rem; margin-bottom: 10px; color: #fff;">Nuraisyah & Rohil</h2>
+        <p class="animate-slide-up">Terima Kasih</p>
+    </footer>
+
+    <!-- Firebase Library -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
