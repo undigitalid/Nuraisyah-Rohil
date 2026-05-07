@@ -132,14 +132,7 @@ h1, h2, h3, .monogram, .subtitle-cover, .event-heading {
     box-shadow: var(--shadow-lg);
     overflow: hidden;
     z-index: 2;
-    /* Transisi untuk efek cinematic click */
-    transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.8s ease;
-}
-
-/* Class trigger efek cinematic dari Javascript */
-.cover-arch.fade-out-cinematic {
-    transform: scale(0.9) translateY(-30px);
-    opacity: 0;
+    transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s ease, border-color 0.5s ease;
 }
 
 /* Shape 2: Kotak Dinamis Sudut Halus (Untuk Konten Utama) */
@@ -199,25 +192,47 @@ h1, h2, h3, .monogram, .subtitle-cover, .event-heading {
    7. SPECIFIC SECTION STYLES
    ========================================================================== */
 
-/* --- A. Cover Section (DENGAN EFEK CINEMATIC LENS) --- */
+/* --- A. Cover Section (EFEK MAGIS MENGELILINGI & TERBANG) --- */
 #cover {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 9999;
-    /* Efek transisi sinematik, lambat di awal, cepat ditengah, lambat di akhir */
-    transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1), opacity 1.5s ease, filter 1.5s ease;
-    background-color: var(--bg-main);
-    padding: 20px;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 9999;
+    transition: opacity 0.6s ease, filter 0.6s ease, transform 0.6s ease;
+    background-color: var(--bg-main); padding: 20px;
 }
-#cover.opened {
-    transform: translateY(-100vh) scale(1.05); /* Slide elegan ke atas */
+
+/* Background utama lenyap dramatis */
+#cover.opened-dramatic {
     opacity: 0;
-    filter: blur(15px); /* Nge-blur kaya kamera out-of-focus */
+    filter: blur(20px) brightness(1.2);
+    transform: scale(1.15);
     visibility: hidden; 
     pointer-events: none;
+}
+
+/* 1. Efek Cahaya Emas Mengelilingi (Glowing Pulse) */
+.magical-unlock {
+    animation: magicalGlowSurround 0.6s ease-in-out forwards;
+    border-color: var(--gold-primary) !important;
+}
+
+@keyframes magicalGlowSurround {
+    0% { box-shadow: 0 0 0 0 rgba(195, 164, 100, 0); transform: scale(1); }
+    40% { box-shadow: 0 0 40px 10px var(--gold-primary), inset 0 0 20px 5px var(--gold-primary); transform: scale(1.02); }
+    80% { box-shadow: 0 0 80px 25px rgba(195, 164, 100, 0.8), inset 0 0 40px 10px rgba(195, 164, 100, 0.6); transform: scale(0.98); }
+    100% { box-shadow: 0 0 120px 50px rgba(255, 255, 255, 0), inset 0 0 10px rgba(195, 164, 100, 0); transform: scale(0.95); }
+}
+
+/* 2. Isi Kotak (Teks dll) Menghilang ke Atas */
+.magical-unlock > *:not(.floral-ornament) {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.9);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* 3. Kotak Melesat Kencang Ke Langit */
+.shoot-up {
+    transform: translateY(-150vh) scale(0.7) !important;
+    opacity: 0;
+    transition: transform 0.6s cubic-bezier(0.75, 0, 0.25, 1), opacity 0.4s ease 0.1s !important;
 }
 
 .monogram { font-size: 4rem; line-height: 1; margin-bottom: 20px; letter-spacing: 2px; }
@@ -229,23 +244,16 @@ h1, h2, h3, .monogram, .subtitle-cover, .event-heading {
 .guest-name { font-family: 'Montserrat', sans-serif; font-size: 1.2rem; }
 
 #btn-open {
-    background-color: var(--bg-inner);
-    color: var(--text-dark);
-    border: 1px solid var(--border-color);
-    padding: 12px 35px;
-    border-radius: 30px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    transition: var(--transition-smooth);
-    z-index: 10;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    background-color: var(--bg-inner); color: var(--text-dark); border: 1px solid var(--border-color);
+    padding: 12px 35px; border-radius: 30px; font-size: 0.9rem; cursor: pointer;
+    font-family: 'Montserrat', sans-serif; font-weight: 600; transition: all 0.4s ease; z-index: 10; text-transform: uppercase; letter-spacing: 1px;
 }
-#btn-open:hover {
-    background-color: var(--text-dark);
-    color: var(--bg-inner);
+#btn-open:hover { background-color: var(--text-dark); color: var(--bg-inner); }
+
+/* Tombol Menyusut Saat Diklik */
+.btn-unlocking {
+    background-color: var(--gold-primary) !important; color: transparent !important;
+    transform: scale(0) !important; opacity: 0; pointer-events: none;
 }
 
 /* --- B. With Love Section --- */
@@ -325,21 +333,46 @@ input:focus, textarea:focus { outline: none; border-color: var(--gold-primary); 
     position: absolute; background-color: #fff; top: calc(100% + 5px); left: 0; right: 0; z-index: 99;
     border: 1px solid var(--border-color); border-radius: 10px; box-shadow: var(--shadow-md); overflow: hidden; opacity: 1; transform: translateY(0); transition: all 0.3s ease;
 }
-.select-hide { opacity: 0; visibility: hidden; transform: translateY(-10px); }
+/* POINTER-EVENTS NONE DITAMBAHKAN AGAR MENCEGAH GHOST CLICK */
+.select-hide { opacity: 0; visibility: hidden; transform: translateY(-10px); pointer-events: none; }
 .select-items div { color: var(--text-dark); padding: 15px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.05); transition: var(--transition-smooth); }
 .select-items div:last-child { border-bottom: none; }
 .select-items div:hover { background-color: var(--bg-inner); color: var(--gold-primary); font-weight: 500; }
 
 /* ==========================================================================
-   9. CUSTOM TOAST NOTIFICATION (PENGGANTI ALERT)
+   9. CUSTOM TOAST NOTIFICATION (DI ATAS FORM)
    ========================================================================== */
 #custom-toast {
-    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background-color: #fff; border-left: 5px solid var(--gold-primary); padding: 15px 25px; border-radius: 10px; box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 15px; z-index: 10000; opacity: 0; visibility: hidden; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); width: 90%; max-width: 400px;
+    width: 100%;
+    background-color: var(--success-bg);
+    border: 1px solid var(--success-text);
+    padding: 12px 20px;
+    border-radius: 8px;
+    display: none; 
+    align-items: center;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-sm);
 }
-#custom-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; visibility: visible; }
+
+#custom-toast.show {
+    display: flex;
+    animation: fadeInDownToast 0.4s ease forwards;
+}
+
+#custom-toast.error {
+    background-color: var(--danger-bg);
+    border-color: var(--danger-text);
+}
+#custom-toast.error .toast-message { color: var(--danger-text); }
+
 .toast-content { display: flex; align-items: center; gap: 12px; width: 100%; }
-.toast-icon { font-size: 1.5rem; }
-.toast-message { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #333; font-weight: 500; text-align: left; }
+.toast-icon { font-size: 1.2rem; }
+.toast-message { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: var(--success-text); font-weight: 600; text-align: left; margin: 0; }
+
+@keyframes fadeInDownToast {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
 /* ==========================================================================
    10. DESAIN LIST UCAPAN & BADGE PREMIUM
