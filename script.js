@@ -1,9 +1,8 @@
 /**
  * ============================================================================
- * WEDDING INVITATION INTERACTIVE ENGINE - ULTIMATE CINEMATIC VERSION
- * Project: The Wedding of Nuraisyah & Rohil
- * Features: Firebase Real-time, Custom Select, Toast, LocalStorage Fallback,
- * REPEATING Scroll Animations, & Cinematic Cover Reveal.
+ * WEDDING INVITATION INTERACTIVE ENGINE - ULTIMATE FINAL VERSION
+ * Features: Firebase Real-time, Custom Select, Toast di Atas Form,
+ * REPEATING Scroll Animations, & MAGICAL Cover Reveal (Fast Sync).
  * ============================================================================
  */
 
@@ -12,14 +11,8 @@
 // ============================================================================
 const CONFIG = {
     weddingDate: "2026-06-14T10:00:00+07:00", 
-    wishes: {
-        perPage: 5,
-        loadMoreCount: 5
-    },
-    toast: {
-        duration: 3500
-    },
-    // DATA FIREBASE ASLI (SUDAH TERHUBUNG)
+    wishes: { perPage: 5, loadMoreCount: 5 },
+    toast: { duration: 3500 },
     firebase: {
         apiKey: "AIzaSyAPbPODvpIxm3yfVNTNOf5D2_nFglpUsPs",
         authDomain: "undangan-nuraisyah-rohil.firebaseapp.com",
@@ -37,44 +30,34 @@ const STATE = {
     isFirebaseActive: false
 };
 
-// ============================================================================
-// 2. DOM ELEMENTS CACHING
-// ============================================================================
 const DOM = {
     body: document.body,
     cover: document.getElementById('cover'),
     btnOpen: document.getElementById('btn-open'),
     bgMusic: document.getElementById('bg-music'),
     musicControl: document.getElementById('music-control'),
-    
     lightbox: {
         overlay: document.getElementById('lightbox'),
         img: document.getElementById('lightbox-img')
     },
-    
     countdown: {
-        days: document.getElementById('days'),
-        hours: document.getElementById('hours'),
-        minutes: document.getElementById('minutes'),
-        seconds: document.getElementById('seconds')
+        days: document.getElementById('days'), hours: document.getElementById('hours'),
+        minutes: document.getElementById('minutes'), seconds: document.getElementById('seconds')
     },
-    
     rsvp: {
         form: document.getElementById('rsvpForm'),
         name: document.getElementById('guestName'),
-        attendance: document.getElementById('attendance'), // Hidden input
+        attendance: document.getElementById('attendance'), 
         wish: document.getElementById('guestWish'),
         submitBtn: document.querySelector('.submit-btn'),
         container: document.getElementById('wishes-container'),
         list: document.getElementById('wishes-list'),
         btnLoadMore: document.getElementById('btn-load-more')
     },
-    
     toast: {
         container: document.getElementById('custom-toast'),
         message: document.getElementById('toast-message')
     },
-
     customSelect: {
         wrapper: document.getElementById('customSelect'),
         selected: document.querySelector('.select-selected'),
@@ -84,18 +67,13 @@ const DOM = {
 };
 
 // ============================================================================
-// 3. INITIALIZATION & CORE LOGIC
+// 2. INITIALIZATION & MAGICAL REVEAL LOGIC
 // ============================================================================
 function initApp() {
-    // Kunci scroll saat awal dimuat
     DOM.body.style.overflow = 'hidden';
-    
-    // Jalankan sub-sistem
     checkFirebaseStatus();
     initCountdown();
     initCustomSelect();
-    
-    // Animasikan cover saat web pertama kali dibuka
     animateCoverOnLoad();
 }
 
@@ -106,34 +84,43 @@ function animateCoverOnLoad() {
     }, 100);
 }
 
-// Logika Buka Undangan & Menjalankan Observer Baru (CINEMATIC EFFECT)
+// LOGIKA MAGICAL REVEAL SAAT TOMBOL DITEKAN (DI PERCEPAT & DISINKRONKAN)
 DOM.btnOpen.addEventListener('click', () => {
-    // Paksa layar ke atas
     window.scrollTo({ top: 0, behavior: 'instant' });
     
-    // 1. Efek Cinematic: Konten dalam mengecil dan pudar duluan
+    // 1. Tombol mengecil
+    DOM.btnOpen.classList.add('btn-unlocking');
+    
+    // 2. Efek cahaya menyebar
     const coverArch = document.querySelector('.cover-arch');
-    if(coverArch) coverArch.classList.add('fade-out-cinematic');
+    if(coverArch) coverArch.classList.add('magical-unlock');
     
-    // 2. Cover utama ditarik ke atas sambil nge-blur setelah sedikit delay
+    // 3. JEDA DIPERCEPAT: Hanya 500ms, langsung terbang dan background hancur
     setTimeout(() => {
+        if(coverArch) {
+            coverArch.classList.remove('magical-unlock');
+            coverArch.classList.add('shoot-up');
+        }
         DOM.cover.classList.remove('is-visible', 'animate-zoom');
-        DOM.cover.classList.add('opened');
-    }, 400); 
+        DOM.cover.classList.add('opened-dramatic');
+    }, 500); 
     
-    // 3. Buka kunci scroll dan jalankan animasi konten bawah
+    // 4. Buka kunci scroll lebih cepat (di detik ke 1.1)
     setTimeout(() => {
         DOM.body.style.overflow = 'auto'; 
         initScrollAnimations();
         initCountUpNumbers();
-    }, 1400); // Menunggu sampai animasi slide cover selesai
+    }, 1100); 
     
-    DOM.musicControl.style.display = 'block';
-    playAudio();
+    // 5. AUDIO DISINKRONKAN: Musik baru nyala pas kotaknya mulai terbang (delay 400ms)
+    setTimeout(() => {
+        DOM.musicControl.style.display = 'block';
+        playAudio();
+    }, 400);
 });
 
 // ============================================================================
-// 4. AUDIO & LIGHTBOX
+// 3. AUDIO & LIGHTBOX
 // ============================================================================
 function playAudio() {
     DOM.bgMusic.play().then(() => {
@@ -168,7 +155,7 @@ window.closeLightbox = function() {
 };
 
 // ============================================================================
-// 5. CUSTOM SELECT DROPDOWN LOGIC
+// 4. CUSTOM SELECT DROPDOWN LOGIC
 // ============================================================================
 function initCustomSelect() {
     if (!DOM.customSelect.wrapper) return;
@@ -201,17 +188,14 @@ function initCustomSelect() {
 }
 
 // ============================================================================
-// 6. ANIMATION SYSTEMS (SELALU MENGULANG SAAT DI-SCROLL)
+// 5. ANIMATION SYSTEMS (SELALU MENGULANG SAAT DI-SCROLL)
 // ============================================================================
 function initScrollAnimations() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Munculkan animasi saat masuk layar
                 entry.target.classList.add('is-visible');
             } else {
-                // INI KUNCINYA: Hapus animasi saat elemen keluar layar
-                // Agar nanti saat di-scroll lagi, animasinya kepancing untuk jalan dari awal
                 entry.target.classList.remove('is-visible');
             }
         });
@@ -221,7 +205,6 @@ function initScrollAnimations() {
         '.animate-slide-up, .animate-fade-in, .animate-fade-left, .animate-fade-right, .animate-zoom'
     );
     
-    // Observasi HANYA ke elemen yang berada di luar Cover
     targets.forEach(t => {
         if (!DOM.cover.contains(t) && t !== DOM.cover) {
             observer.observe(t);
@@ -257,7 +240,7 @@ function initCountUpNumbers() {
 }
 
 // ============================================================================
-// 7. COUNTDOWN ENGINE
+// 6. COUNTDOWN ENGINE
 // ============================================================================
 function initCountdown() {
     const target = new Date(CONFIG.weddingDate).getTime();
@@ -279,16 +262,29 @@ function initCountdown() {
 }
 
 // ============================================================================
-// 8. NOTIFICATION & UTILS
+// 7. NOTIFICATION & UTILS
 // ============================================================================
 const ToastManager = {
+    timeoutId: null,
     show(msg, type = 'success') {
+        const toast = DOM.toast.container;
+        const icon = toast.querySelector('.toast-icon');
         DOM.toast.message.innerText = msg;
-        const icon = DOM.toast.container.querySelector('.toast-icon');
-        if(icon) icon.innerText = type === 'success' ? '✨' : '⚠️';
         
-        DOM.toast.container.classList.add('show');
-        setTimeout(() => DOM.toast.container.classList.remove('show'), CONFIG.toast.duration);
+        if (type === 'success') {
+            if(icon) icon.innerText = '✨';
+            toast.classList.remove('error');
+        } else {
+            if(icon) icon.innerText = '⚠️';
+            toast.classList.add('error');
+        }
+        
+        toast.classList.add('show');
+        
+        if (this.timeoutId) clearTimeout(this.timeoutId);
+        this.timeoutId = setTimeout(() => {
+            toast.classList.remove('show');
+        }, CONFIG.toast.duration);
     }
 };
 
@@ -308,7 +304,7 @@ function sanitizeHTML(str) {
 }
 
 // ============================================================================
-// 9. DATABASE INTEGRATION (FIREBASE & LOCALSTORAGE)
+// 8. DATABASE INTEGRATION (FIREBASE & LOCALSTORAGE)
 // ============================================================================
 function checkFirebaseStatus() {
     if (CONFIG.firebase.apiKey !== "API_KEY_KAMU") {
@@ -336,7 +332,7 @@ function initFirebase() {
         const attendanceVal = DOM.rsvp.attendance.value;
         if (!attendanceVal) {
             ToastManager.show("Silakan pilih Konfirmasi Kehadiran terlebih dahulu!", "error");
-            DOM.customSelect.selected.style.borderColor = 'red';
+            DOM.customSelect.selected.style.borderColor = '#c62828';
             return;
         }
 
@@ -364,7 +360,6 @@ function initFirebase() {
 }
 
 function initLocalStorageFallback() {
-    console.log("Mode Demo: Menggunakan Local Storage.");
     const saved = localStorage.getItem('demoWeddingWishes');
     STATE.allWishes = saved ? JSON.parse(saved) : [];
     renderWishes();
@@ -375,7 +370,7 @@ function initLocalStorageFallback() {
         const attendanceVal = DOM.rsvp.attendance.value;
         if (!attendanceVal) {
             ToastManager.show("Silakan pilih Konfirmasi Kehadiran terlebih dahulu!", "error");
-            DOM.customSelect.selected.style.borderColor = 'red';
+            DOM.customSelect.selected.style.borderColor = '#c62828';
             return;
         }
 
@@ -403,7 +398,7 @@ function initLocalStorageFallback() {
 }
 
 // ============================================================================
-// 10. RENDERING SYSTEM
+// 9. RENDERING SYSTEM
 // ============================================================================
 function renderWishes() {
     if (!DOM.rsvp.list) return;
